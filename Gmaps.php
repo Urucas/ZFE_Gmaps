@@ -46,7 +46,7 @@ class ZFE_Gmaps extends Zend_Form_Element {
 		$xhtml = "";
 		$xhtml.= '<label>'.$this->getLabel().'</label>';
 		
-		$xhtml.= '<div id="'.$this->getId().'" style="width:'.$this->_width.'px;height:'.$this->_height.'px; margin:8px;"></div>';
+		$xhtml.= '<div id="'.$this->getId().'" style="width:'.$this->_width.'px;height:'.$this->_height.'px; margin:8px;border:1px solid #333;"></div>';
 		$xhtml.= '<label>Latitud</label>';
 		$xhtml.= '<input type="text" id="lat-'.$this->getId().'" name="'.$this->getId().'[lat]" value="'.(float)$this->_latitude.'" /><br />';
 		$xhtml.= '<label>Longitud</label>';
