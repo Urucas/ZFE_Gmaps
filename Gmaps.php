@@ -23,24 +23,34 @@ class ZFE_Gmaps extends Zend_Form_Element {
 		return $this;
 	}
 
-	public function setLatNLng($latitude, $longitude) {
-		$this->_latitude = (float) $latitude;
-		$this->_longitude = (float) $longitude;
-		return $this;
-	}
-
 	public function setMarker($img_path) {
 		$this->_marker = (string) $img_path;
 	}
 
+	public function setValue($latLng) {
+		$this->_latitude = (float) $latLng["lat"];
+		$this->_longitude = (float) $latLng["lng"];
+		return $this;
+	}
+
+	public function getValue() {
+
+		return array(
+			"lat" => (float)$this->_latitude,
+			"lng" => (float)$this->_longitude
+		);
+	}
+
 	public function render() {
-	
+
 		$xhtml = "";
 		$xhtml.= '<label>'.$this->getLabel().'</label>';
 		
 		$xhtml.= '<div id="'.$this->getId().'" style="width:'.$this->_width.'px;height:'.$this->_height.'px; margin:8px;"></div>';
-		$xhtml.= '<label>Latitud</label><input type="text" id="latitude-'.$this->getId().'" value="'.(float)$this->_latitude.'" /><br />';
-		$xhtml.= '<label>Longitud</label><input type="text" id="longitude-'.$this->getId().'" value="'.(float)$this->_longitude.'" /><br />';
+		$xhtml.= '<label>Latitud</label>';
+		$xhtml.= '<input type="text" id="lat-'.$this->getId().'" name="'.$this->getId().'[lat]" value="'.(float)$this->_latitude.'" /><br />';
+		$xhtml.= '<label>Longitud</label>';
+		$xhtml.= '<input type="text" id="lng-'.$this->getId().'" name="'.$this->getId().'[lng]" value="'.(float)$this->_longitude.'" /><br />';
 	
 		$xhtml.= '<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key='.$this->_appKey.'&sensor=true"></script>';
 		$xhtml.= '<script type="text/javascript">';
@@ -64,8 +74,8 @@ class ZFE_Gmaps extends Zend_Form_Element {
 		$xhtml.= 'google.maps.event.addListener(map, "click", function(event) {';
 		$xhtml.= '  marker.setPosition(new google.maps.LatLng(event.latLng.lat(),event.latLng.lng()));';
 		$xhtml.= '  map.panTo(new google.maps.LatLng(event.latLng.lat(),event.latLng.lng()));';
-		$xhtml.= '  document.getElementById("latitude-'.$this->getId().'").value = event.latLng.lat();';
-		$xhtml.= '  document.getElementById("longitude-'.$this->getId().'").value = event.latLng.lng();';
+		$xhtml.= '  document.getElementById("lat-'.$this->getId().'").value = event.latLng.lat();';
+		$xhtml.= '  document.getElementById("lng-'.$this->getId().'").value = event.latLng.lng();';
   	    $xhtml.= '});';
 
 		$xhtml.= '	}';
